@@ -36,9 +36,9 @@ const CountryDetails = () => {
                 <dd className="font-medium">{selectedCountry.region}</dd>
               </div>
 
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <dt>Subregion</dt>
-                <dd className="font-medium">
+                <dd className="font-medium text-right">
                   {selectedCountry.subregion || "—"}
                 </dd>
               </div>

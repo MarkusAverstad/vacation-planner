@@ -5,6 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 export const aliasConfig = {
   "@": "/src",
   components: "/src/components",
+  constants: "/src/constants",
   utils: "/src/utils",
   types: "/src/types",
   hooks: "/src/hooks",

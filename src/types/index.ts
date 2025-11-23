@@ -6,7 +6,10 @@ type Flags = {
 
 export type GiniRecord = Record<string, number>;
 export type GiniData = { year: string; score: number };
-export type GiniFilter = { min: number; max: number };
+export type GiniFilter = {
+  min: number;
+  max: number;
+};
 
 export type CountryListResponse = {
   cca3: string;
@@ -17,6 +20,7 @@ export type CountryListResponse = {
   flags: Flags;
   population: number;
   gini: GiniRecord;
+  languages: Record<string, string>;
 };
 
 export type CountryListData = {
@@ -25,6 +29,12 @@ export type CountryListData = {
   flags: Flags;
   population: number;
   gini: GiniData | null;
+  languages: Record<string, string>;
+};
+
+export type Language = {
+  code: string;
+  name: string;
 };
 
 export type CountryResponse = {

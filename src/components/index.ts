@@ -5,6 +5,7 @@ import GiniFilter from "./GiniFilter/GiniFilter";
 import SummaryBar from "./SummaryBar/SummaryBar";
 import SortTH from "./SortTH/SortTH";
 import CountryDetails from "./CountryDetails/CountryDetails";
+import FilterBar from "./FilterBar/FilterBar";
 
 export {
   CountryTable,
@@ -14,4 +15,5 @@ export {
   SortTH,
   GiniFilter,
   CountryDetails,
+  FilterBar,
 };

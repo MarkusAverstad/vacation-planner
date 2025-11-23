@@ -12,7 +12,7 @@ import {
   CountryResponse,
   GiniFilter,
 } from "types";
-import { extractLatestGini } from "@/util";
+import { extractLatestGini } from "utils";
 
 const useCountryDataInternal = () => {
   const [countries, setCountries] = useState<CountryListData[]>([]);
@@ -22,10 +22,13 @@ const useCountryDataInternal = () => {
   );
   const [selectedCountry, setSelectedCountry] =
     useState<CountryResponse | null>();
+  const [selectedLanguageFilter, setSelectedLanguageFilter] = useState<
+    string | null
+  >(null);
 
   useEffect(() => {
     fetch(
-      "https://restcountries.com/v3.1/all?fields=name,flags,population,gini,cca3",
+      "https://restcountries.com/v3.1/all?fields=name,flags,population,gini,cca3,languages",
       {
         method: "GET",
         headers: {
@@ -72,15 +75,38 @@ const useCountryDataInternal = () => {
     return () => abortController.abort();
   }, [selectedCountryCode]);
 
+  const uniqueLanguages = useMemo(() => {
+    const languageSet = new Set<string>();
+
+    countries.forEach((country) => {
+      Object.values(country.languages).forEach((language) => {
+        languageSet.add(language);
+      });
+    });
+
+    return Array.from(languageSet).sort();
+  }, [countries]);
+
   const filteredCountries = useMemo(() => {
-    if (!giniFilter) return countries;
-    return countries.filter(
-      (country) =>
-        country.gini &&
-        country.gini.score <= giniFilter.max &&
-        country.gini.score >= giniFilter.min,
-    );
-  }, [countries, giniFilter]);
+    let filtered = countries;
+
+    if (selectedLanguageFilter) {
+      filtered = filtered.filter((country) =>
+        Object.values(country.languages).includes(selectedLanguageFilter),
+      );
+    }
+
+    if (giniFilter) {
+      filtered = filtered.filter(
+        (country) =>
+          country.gini &&
+          country.gini.score <= giniFilter.max &&
+          country.gini.score >= giniFilter.min,
+      );
+    }
+
+    return filtered;
+  }, [countries, selectedLanguageFilter, giniFilter]);
 
   return {
     filteredCountries,
@@ -89,6 +115,8 @@ const useCountryDataInternal = () => {
     selectedCountryCode,
     setSelectedCountryCode,
     selectedCountry,
+    uniqueLanguages,
+    setSelectedLanguageFilter,
   };
 };
 
