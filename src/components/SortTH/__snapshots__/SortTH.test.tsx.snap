@@ -1,0 +1,112 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SortTH > should match snapshot as sorted 1`] = `
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th
+          class="
+        cursor-pointer select-none px-4 py-2
+        text-left text-gray-900
+        hover:bg-gray-200
+        bg-gray-200
+        transition-colors duration-150
+      "
+          data-testid="test1"
+          role="button"
+        >
+          <div
+            class="flex items-center justify-between"
+          >
+            <span>
+              Test the first
+            </span>
+            <span
+              class="ml-2 text-sm text-gray-700 transition-opacity duration-150 
+          opacity-100"
+              data-testid="sort-direction-test1"
+            >
+              ↑
+            </span>
+          </div>
+        </th>
+      </tr>
+    </thead>
+  </table>
+</div>
+`;
+
+exports[`SortTH > should match snapshot as sorted descending 1`] = `
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th
+          class="
+        cursor-pointer select-none px-4 py-2
+        text-left text-gray-900
+        hover:bg-gray-200
+        bg-gray-200
+        transition-colors duration-150
+      "
+          data-testid="test1"
+          role="button"
+        >
+          <div
+            class="flex items-center justify-between"
+          >
+            <span>
+              Test the first
+            </span>
+            <span
+              class="ml-2 text-sm text-gray-700 transition-opacity duration-150 
+          opacity-100"
+              data-testid="sort-direction-test1"
+            >
+              ↓
+            </span>
+          </div>
+        </th>
+      </tr>
+    </thead>
+  </table>
+</div>
+`;
+
+exports[`SortTH > should match snapshot as unsorted 1`] = `
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th
+          class="
+        cursor-pointer select-none px-4 py-2
+        text-left text-gray-900
+        hover:bg-gray-200
+        
+        transition-colors duration-150
+      "
+          data-testid="test1"
+          role="button"
+        >
+          <div
+            class="flex items-center justify-between"
+          >
+            <span>
+              Test the first
+            </span>
+            <span
+              class="ml-2 text-sm text-gray-700 transition-opacity duration-150 
+          opacity-0"
+              data-testid="sort-direction-test1"
+            >
+              ↓
+            </span>
+          </div>
+        </th>
+      </tr>
+    </thead>
+  </table>
+</div>
+`;
