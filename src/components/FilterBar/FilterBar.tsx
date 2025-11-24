@@ -6,8 +6,12 @@ const FilterBar = () => {
   const [selectedGiniIndex, setSelectedGiniIndex] = useState<string>("");
   const [selectedLanguage, setSelectedLanguage] = useState<string>("");
 
-  const { setGiniFilter, uniqueLanguages, setSelectedLanguageFilter } =
-    useCountryData();
+  const {
+    setGiniFilter,
+    uniqueLanguages,
+    setSelectedLanguageFilter,
+    languagesLoading,
+  } = useCountryData();
 
   const handleGiniFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedGiniIndex(e.target.value);
@@ -40,6 +44,7 @@ const FilterBar = () => {
         value={selectedLanguage}
         onChange={handleLanguageFilterChange}
         className="px-2 py-1 border rounded bg-gray-50 text-gray-900 min-w-[230px]"
+        disabled={languagesLoading}
       >
         <option value="">Language</option>
         {uniqueLanguages &&

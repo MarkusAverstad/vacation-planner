@@ -3,7 +3,7 @@
 exports[`CountryList > should match snapshot 1`] = `
 <div>
   <div
-    class="overflow-y-scroll max-h-[70vh]"
+    class="overflow-y-scroll"
   >
     <table
       class="min-w-full border-collapse"
@@ -39,7 +39,7 @@ exports[`CountryList > should match snapshot 1`] = `
           opacity-100"
                 data-testid="sort-direction-name"
               >
-                ↓
+                ↑
               </span>
             </div>
           </th>
@@ -65,7 +65,7 @@ exports[`CountryList > should match snapshot 1`] = `
           opacity-0"
                 data-testid="sort-direction-population"
               >
-                ↓
+                ↑
               </span>
             </div>
           </th>
@@ -91,7 +91,7 @@ exports[`CountryList > should match snapshot 1`] = `
           opacity-0"
                 data-testid="sort-direction-gini"
               >
-                ↓
+                ↑
               </span>
             </div>
           </th>
@@ -99,7 +99,9 @@ exports[`CountryList > should match snapshot 1`] = `
       </thead>
       <tbody>
         <tr
-          class="transition-colors duration-150 bg-white hover:bg-gray-100"
+          class="transition-colors duration-150 hover:bg-gray-100 cursor-pointer bg-white"
+          data-testid="country-row-ELB"
+          role="button"
         >
           <td
             class="px-4 py-2 text-gray-900"
@@ -118,7 +120,7 @@ exports[`CountryList > should match snapshot 1`] = `
           <td
             class="px-4 py-2 text-gray-900"
           >
-            3822
+            3,822
           </td>
           <td
             class="px-4 py-2 text-gray-900"
@@ -128,6 +130,19 @@ exports[`CountryList > should match snapshot 1`] = `
         </tr>
       </tbody>
     </table>
+  </div>
+</div>
+`;
+
+exports[`CountryList > should match snapshot while loading 1`] = `
+<div>
+  <div
+    class="flex justify-center items-center h-screen"
+    data-testid="countries-loading-spinner"
+  >
+    <div
+      class="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-500"
+    />
   </div>
 </div>
 `;

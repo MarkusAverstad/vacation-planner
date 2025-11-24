@@ -1,3 +1,4 @@
+// Note: I was going to add a country name filter using this litle util but ran out of time.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function debounce<T extends (...args: any[]) => void>(
   func: T,

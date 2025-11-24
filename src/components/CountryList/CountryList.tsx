@@ -3,11 +3,21 @@ import { SortTH } from "components";
 import { useCountryData } from "hooks";
 import { GiniData } from "types";
 
+const populationNumberFormat = new Intl.NumberFormat("en-US", {
+  style: "decimal",
+  maximumFractionDigits: 0,
+});
+
 const CountryList = () => {
   const [sortBy, setSortBy] = useState<string>("name");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
-  const { filteredCountries, setSelectedCountryCode } = useCountryData();
+  const {
+    filteredCountries,
+    selectedCountryCode,
+    setSelectedCountryCode,
+    countriesLoading,
+  } = useCountryData();
 
   const handleSort = (id: string) => {
     if (id === sortBy) {
@@ -49,8 +59,15 @@ const CountryList = () => {
     });
   }, [filteredCountries, sortBy, sortDirection]);
 
-  function onSelectCountry(countryCode: string) {
-    return () => setSelectedCountryCode(countryCode);
+  if (countriesLoading) {
+    return (
+      <div
+        data-testid="countries-loading-spinner"
+        className="flex justify-center items-center h-screen"
+      >
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-500"></div>
+      </div>
+    );
   }
 
   return (
@@ -83,14 +100,13 @@ const CountryList = () => {
           </tr>
         </thead>
         <tbody>
-          {sortedCountries.map((country, idx) => (
+          {sortedCountries.map((country, index) => (
             <tr
+              data-testid={`country-row-${country.code}`}
               role="button"
-              onClick={onSelectCountry(country.code)}
+              onClick={() => setSelectedCountryCode(country.code)}
               key={country.code}
-              className={`transition-colors duration-150 ${
-                idx % 2 === 0 ? "bg-white" : "bg-gray-50"
-              } hover:bg-gray-100`}
+              className={`transition-colors duration-150 hover:bg-gray-100 cursor-pointer ${selectedCountryCode === country.code ? "border border-black bg-gray-100" : index % 2 === 0 ? "bg-white" : "bg-gray-50"}`}
             >
               <td className="px-4 py-2 text-gray-900">
                 <img
@@ -100,7 +116,9 @@ const CountryList = () => {
                 />
               </td>
               <td className="px-4 py-2 text-gray-900">{country.name}</td>
-              <td className="px-4 py-2 text-gray-900">{country.population}</td>
+              <td className="px-4 py-2 text-gray-900">
+                {populationNumberFormat.format(country.population)}
+              </td>
               <td className="px-4 py-2 text-gray-900">
                 {country.gini
                   ? `${country.gini.score} (${country.gini.year})`

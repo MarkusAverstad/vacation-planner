@@ -14,7 +14,24 @@ import {
 } from "types";
 import { extractLatestGini } from "utils";
 
-const useCountryDataInternal = () => {
+export interface CountryDataContextValue {
+  filteredCountries: CountryListData[];
+  giniFilter: GiniFilter | null;
+  setGiniFilter: (filter: GiniFilter | null) => void;
+  selectedCountryCode: string | null;
+  setSelectedCountryCode: (code: string | null) => void;
+  selectedCountry: CountryResponse | null | undefined;
+  uniqueLanguages: string[];
+  setSelectedLanguageFilter: (language: string | null) => void;
+  countriesLoading: boolean;
+  languagesLoading: boolean;
+  selectedCountryLoading: boolean;
+}
+
+const useCountryDataInternal = (): CountryDataContextValue => {
+  const [countriesLoading, setCountriesLoading] = useState(true);
+  const [languagesLoading, setLanguagesLoading] = useState(true);
+  const [selectedCountryLoading, setSelectedCountryLoading] = useState(false);
   const [countries, setCountries] = useState<CountryListData[]>([]);
   const [giniFilter, setGiniFilter] = useState<GiniFilter | null>(null);
   const [selectedCountryCode, setSelectedCountryCode] = useState<string | null>(
@@ -37,7 +54,7 @@ const useCountryDataInternal = () => {
         },
       },
     ).then((response) =>
-      response.json().then((countries: CountryListResponse[]) =>
+      response.json().then((countries: CountryListResponse[]) => {
         setCountries(
           countries.map((country) => ({
             ...country,
@@ -45,14 +62,16 @@ const useCountryDataInternal = () => {
             name: country.name.common,
             gini: extractLatestGini(country.gini),
           })),
-        ),
-      ),
+        );
+        setCountriesLoading(false);
+      }),
     );
   }, []);
 
   useEffect(() => {
     if (!selectedCountryCode) return;
 
+    setSelectedCountryLoading(true);
     const abortController = new AbortController();
 
     fetch("https://restcountries.com/v3.1/alpha/" + selectedCountryCode, {
@@ -63,13 +82,12 @@ const useCountryDataInternal = () => {
         "Access-Control-Allow-Origin": "*",
       },
     }).then((response) =>
-      response
-        .json()
-        .then((countryResponse: CountryResponse[]) =>
-          setSelectedCountry(
-            countryResponse.length > 0 ? countryResponse[0] : null,
-          ),
-        ),
+      response.json().then((countryResponse: CountryResponse[]) => {
+        setSelectedCountry(
+          countryResponse.length > 0 ? countryResponse[0] : null,
+        );
+        setSelectedCountryLoading(false);
+      }),
     );
 
     return () => abortController.abort();
@@ -84,6 +102,7 @@ const useCountryDataInternal = () => {
       });
     });
 
+    setLanguagesLoading(false);
     return Array.from(languageSet).sort();
   }, [countries]);
 
@@ -117,12 +136,13 @@ const useCountryDataInternal = () => {
     selectedCountry,
     uniqueLanguages,
     setSelectedLanguageFilter,
+    countriesLoading,
+    languagesLoading,
+    selectedCountryLoading,
   };
 };
 
-const CountryDataContext = createContext<ReturnType<
-  typeof useCountryDataInternal
-> | null>(null);
+const CountryDataContext = createContext<CountryDataContextValue | null>(null);
 
 export const CountryDataProvider = ({ children }: { children: ReactNode }) => {
   return (
@@ -134,7 +154,7 @@ export const CountryDataProvider = ({ children }: { children: ReactNode }) => {
 
 // Note: I decided to keep the hook and provider together for simplicity.
 // eslint-disable-next-line react-refresh/only-export-components
-export const useCountryData = () => {
+export const useCountryData = (): CountryDataContextValue => {
   const context = useContext(CountryDataContext);
   if (!context) {
     throw new Error("useCountryData must be used within a CountryDataProvider");

@@ -11,17 +11,20 @@ structure later, which is costly. The downside is that styling has suffered, whi
 Structure:
 - src
     - components
+        - CountryDetails
         - CountryList
         - Header
         - SortTH
         - SummaryBar
         - GiniFilter
+    - constants
+        - giniFilters.ts
     - hooks
         - useCountryData.ts (contains application state and data)
     - types
     - utils
-        - dataGenerator.ts
-        - debounce.ts
+        - debounce.ts (not used)
+        - giniUtil.ts
     - Dashboard.tsx
     - main.tsx
     - index.css
@@ -38,7 +41,7 @@ Structure:
 
 ## Tech choices taken
 - Typescript. Never leave home without it.
-- React. I am very much at home with this framework, although I could certainly just as well have built it in Vue3
+- React. I am very much at home with this framework, although I could certainly just as well have built it in Vue3.
 - TailwindCSS. A very lightweight and simple CSS framework that I have worked with in the past. It's easy to learn and works very well for all sizes of applications in my experience.
 - Vite. It's much faster than Webpack and allows use of Vitest which is much faster than Jest.
 - Eslint. Works well with Typescript for finding bugs before they happen.
@@ -52,10 +55,17 @@ hook / provider since it's the center of the application. E2E tests with Playwri
 This application works very well for the current list of countries. It does however filter and sort the list separately
 which is a bit inefficient. Also, the flags are not reloaded as fast as the rest of the list leading to a choppy feeling.
 
+## A note on features missing
+It is quite possible to select a country and then filter it away. This may or may not be as intended.
+
 ## A note on styling.
-The styling is very straightforward and utilitarian. I quite liked the dark mode styling that came with the create vite app
-and decided to keep going with that. The table would benefit from having the option for dark mode, but again I ran out of
-time.
+The styling is very straightforward and utilitarian as a result of me focusing on structure and features. 
+I quite liked the dark mode styling that came with the create vite app and decided to keep going with that.
+A few specific notes:
+- The table should be in dark mode as well.
+- In the table, the currently selected country is highlighted, but it's perhaps too subtle.
+- The loading spinners are very generic and placeholder-y, and the content just pops in. Animation would be nice.
+- The flags are variable height, which should be handled better.
 
 ## A note on version control.
 I worked on this on my local machine for an evening, so I didn't feel it was necessary to commit to Git more than at the 
