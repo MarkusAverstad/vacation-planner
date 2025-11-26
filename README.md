@@ -66,6 +66,7 @@ A few specific notes:
 - In the table, the currently selected country is highlighted, but it's perhaps too subtle.
 - The loading spinners are very generic and placeholder-y, and the content just pops in. Animation would be nice.
 - The flags are variable height, which should be handled better.
+- When width is low the panels will stack instead, but there is a flicker when switching displayed countries.
 
 ## A note on version control.
 I worked on this on my local machine for an evening, so I didn't feel it was necessary to commit to Git more than at the 
