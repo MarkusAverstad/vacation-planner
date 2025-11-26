@@ -32,11 +32,6 @@ export type CountryListData = {
   languages: Record<string, string>;
 };
 
-export type Language = {
-  code: string;
-  name: string;
-};
-
 export type CountryResponse = {
   name: {
     common: string;
